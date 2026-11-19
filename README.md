@@ -15,8 +15,6 @@ src/
   searching/                    # EMPTY: teammate 4
     .gitkeep
 contract.md                     # shared API specification
-CODEX_PROMPT.md                 # prompt to give Codex
-AGENTS.md                       # guardrails for AI coding agents
 tests/test_main_io.py           # only I/O unit tests
 data/.gitkeep                   # instructor reference files go here
 examples/addresses.txt         # demo raw addresses
@@ -25,7 +23,6 @@ examples/addresses.txt         # demo raw addresses
 ## Local commands
 
 ```bash
-python -m unittest discover -s tests -v
 python -m src.main --help
 python -m src.main --input examples/addresses.txt --database-dir data --output results.jsonl
 ```

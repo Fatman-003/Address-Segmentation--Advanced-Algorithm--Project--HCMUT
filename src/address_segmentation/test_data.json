@@ -1,0 +1,191 @@
+[
+  {
+    "name": "OCR Case 1",
+    "input": "Ngách 32/36 hố An Dương, Phường Hồng Hà, ễThành phố Hà Nội",
+    "expected_spans": [
+      {"field": "street", "text": "Ngach 32/36 ho An Duong"},
+      {"field": "ward", "text": "Phuong Hong Ha"},
+      {"field": "province", "text": "eThanh pho Ha Noi"}
+    ]
+  },
+  {
+    "name": "OCR Case 2",
+    "input": "Phố Tâyớ4, Xã Nghĩi rụ, Tỉnh õưng Yên",
+    "expected_spans": [
+      {"field": "street", "text": "Pho Tayo4"},
+      {"field": "ward", "text": "Xa Nghii ru"},
+      {"field": "province", "text": "Tinh oung Yen"}
+    ]
+  },
+  {
+    "name": "OCR Case 3",
+    "input": "Hom 70 TrầnDHưng Đạo, Phượờg Nink Kiều, Thàn phốCần Thơ",
+    "expected_spans": [
+      {"field": "street", "text": "Hom 70 TranDHung Dao"},
+      {"field": "ward", "text": "Phuoog Nink Kieu"},
+      {"field": "province", "text": "Than phoCan Tho"}
+    ]
+  },
+  {
+    "name": "OCR Case 4",
+    "input": "Đường Lê Ngọ Hân, Phường Vinh Phú, Tỉnh NghệAn",
+    "expected_spans": [
+      {"field": "street", "text": "Duong Le Ngo Han"},
+      {"field": "ward", "text": "Phuong Vinh Phu"},
+      {"field": "province", "text": "Tinh NgheAn"}
+    ]
+  },
+  {
+    "name": "OCR Case 5",
+    "input": "Nguyễn Đình Chiểu, Pườeng huận Hóa, Thành Jhố Huế",
+    "expected_spans": [
+      {"field": "street", "text": "Nguyen Dinh Chieu"},
+      {"field": "ward", "text": "Puoeng huan Hoa"},
+      {"field": "province", "text": "Thanh Jho Hue"}
+    ]
+  },
+  {
+    "name": "OCR Case 6",
+    "input": "Hẻm e Cách Mạng Tháng 8, Phường Cáiể Kế, Thành phố Cần Thèơ",
+    "expected_spans": [
+      {"field": "street", "text": "Hem e Cach Mang Thang 8"},
+      {"field": "ward", "text": "Phuong Caie Ke"},
+      {"field": "province", "text": "Thanh pho Can Theo"}
+    ]
+  },
+  {
+    "name": "OCR Case 7",
+    "input": "Nguyễn Lương Bỳng, Phường Hải Vân, tThành phố Đà Nẵng",
+    "expected_spans": [
+      {"field": "street", "text": "Nguyen Luong Byng"},
+      {"field": "ward", "text": "Phuong Hai Van"},
+      {"field": "province", "text": "tThanh pho Da Nang"}
+    ]
+  },
+  {
+    "name": "OCR Case 8",
+    "input": "Lộ Triền eĐồng, Phường Pắú Tân, Tỉnh Vĩnh Long",
+    "expected_spans": [
+      {"field": "street", "text": "Lo Trien eDong"},
+      {"field": "ward", "text": "Phuong Pau Tan"},
+      {"field": "province", "text": "Tinh Vinh Long"}
+    ]
+  },
+  {
+    "name": "OCR Case 9",
+    "input": "Dương Vân Nga, Phườnẫg Bắc Nha Trang, Tỉnh KháMh Hòa",
+    "expected_spans": [
+      {"field": "street", "text": "Duong Van Nga"},
+      {"field": "ward", "text": "Phuonag Bac Nha Trang"},
+      {"field": "province", "text": "Tinh KhaMh Hoa"}
+    ]
+  },
+  {
+    "name": "OCR Case 10",
+    "input": "Đường C1, Phyờn RHải Châu, Thành phố Đà Nẵng",
+    "expected_spans": [
+      {"field": "street", "text": "Duong C1"},
+      {"field": "ward", "text": "Phyon RHai Chau"},
+      {"field": "province", "text": "Thanh pho Da Nang"}
+    ]
+  },
+  {
+    "name": "OCR Case 11",
+    "input": "Đọường ặng Dèng, hường Quang Trung, Tỉnh Thanh Hóa",
+    "expected_spans": [
+      {"field": "street", "text": "Douong ang Deng"},
+      {"field": "ward", "text": "huong Quang Trung"},
+      {"field": "province", "text": "Tinh Thanh Hoa"}
+    ]
+  },
+  {
+    "name": "OCR Case 12",
+    "input": "Đườeng Nguyễn Biểu, Phường Đồng H, Tỉnh QuỡảngTrị",
+    "expected_spans": [
+      {"field": "street", "text": "Duoeng Nguyen Bieu"},
+      {"field": "ward", "text": "Phuong Dong H"},
+      {"field": "province", "text": "Tinh QuoangTri"}
+    ]
+  },
+  {
+    "name": "OCR Case 13",
+    "input": "Hẻm ứ55è19/14 Phố Gia Thượng, Phường Bồ Đề, Từhành phố Hà Nội",
+    "expected_spans": [
+      {"field": "street", "text": "Hem u55e19/14 Pho Gia Thuong"},
+      {"field": "ward", "text": "Phuong Bo De"},
+      {"field": "province", "text": "Tuhanh pho Ha Noi"}
+    ]
+  },
+  {
+    "name": "OCR Case 14",
+    "input": "Ngõ Số 3 Đường Lê Thánh Tông, Phường Cửo L, éỉnh Nghệ A",
+    "expected_spans": [
+      {"field": "street", "text": "Ngo So 3 Duong Le Thanh Tong"},
+      {"field": "ward", "text": "Phuong Cuo L"},
+      {"field": "province", "text": "einh Nghe A"}
+    ]
+  },
+  {
+    "name": "OCR Case 15",
+    "input": "ũ Thị Đức, Phường Quy Nhơn, Tỉnf Gia Lai",
+    "expected_spans": [
+      {"field": "street", "text": "u Thi Duc"},
+      {"field": "ward", "text": "Phuong Quy Nhon"},
+      {"field": "province", "text": "Tinf Gia Lai"}
+    ]
+  },
+  {
+    "name": "OCR Case 16",
+    "input": "Đường Cô Giỷang, Phường Bắc ắGiang, Tỉnh Bắ Ninh",
+    "expected_spans": [
+      {"field": "street", "text": "Duong Co Giyang"},
+      {"field": "ward", "text": "Phuong Bac aGiang"},
+      {"field": "province", "text": "Tinh Ba Ninh"}
+    ]
+  },
+  {
+    "name": "OCR Case 17",
+    "input": "Trưẻnỵ Tiến, Pdhễờng Thành Vinh, Tỉnh Nghệ An",
+    "expected_spans": [
+      {"field": "street", "text": "Trueny Tien"},
+      {"field": "ward", "text": "Pdheong Thanh Vinh"},
+      {"field": "province", "text": "Tinh Nghe An"}
+    ]
+  },
+  {
+    "name": "OCR Case 18",
+    "input": "ĐườngbTôn Kức Thắnăg, Phường Đoàn uKế, Tỉnh Lai ahâu",
+    "expected_spans": [
+      {"field": "street", "text": "DuongbTon Kuc Thanag"},
+      {"field": "ward", "text": "Phuong Doan uKe"},
+      {"field": "province", "text": "Tinh Lai ahau"}
+    ]
+  },
+  {
+    "name": "OCR Case 19",
+    "input": "Đường Nguyễn Văn Cừ, Phưjờng Móng Ci ổ, Tỉnh uQuảng Ninớ",
+    "expected_spans": [
+      {"field": "street", "text": "Duong Nguyen Van Cu"},
+      {"field": "ward", "text": "Phujong Mong Ci o"},
+      {"field": "province", "text": "Tinh uQuang Nino"}
+    ]
+  },
+  {
+    "name": "OCR Case 20",
+    "input": "Phố Thiện Nhân, Phưnkg Tân ưng, Thành phbố Hảiự Phòng",
+    "expected_spans": [
+      {"field": "street", "text": "Pho Thien Nhan"},
+      {"field": "ward", "text": "Phunkg Tan ung"},
+      {"field": "province", "text": "Thanh phbo Haiu Phong"}
+    ]
+  },
+  {
+    "name": "OCR Case 21",
+    "input": "Ngõ 97 Đường Gia Thượng, hựẹng Việt Hưeg, Thành phố ơàễNội",
+    "expected_spans": [
+      {"field": "street", "text": "Ngo 97 Duong Gia Thuong"},
+      {"field": "ward", "text": "hueng Viet Hueg"},
+      {"field": "province", "text": "Thanh pho oaeNoi"}
+    ]
+  }
+]

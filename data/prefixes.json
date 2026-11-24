@@ -1,0 +1,63 @@
+{
+  "strip_prefixes": {
+    "province": [
+      "thanh pho truc thuoc trung uong",
+      "thanh pho",
+      "tinh",
+      "tp",
+      "t"
+    ],
+    "ward": [
+      "phuong",
+      "dac khu",
+      "thi tran",
+      "xa",
+      "ph",
+      "dk",
+      "tt",
+      "p",
+      "x"
+    ],
+    "street": [
+      "duong",
+      "pho",
+      "d"
+    ]
+  },
+  "alley_prefixes": [
+    "ngach",
+    "hem",
+    "ngo",
+    "kiet",
+    "hom"
+  ],
+  "abbreviation_expansions": {
+    "province": {
+      "tp": "thanh pho",
+      "t": "tinh"
+    },
+    "ward": {
+      "p": "phuong",
+      "ph": "phuong",
+      "x": "xa",
+      "tt": "thi tran",
+      "dk": "dac khu"
+    },
+    "street": {
+      "d": "duong",
+      "dl": "dai lo",
+      "ql": "quoc lo",
+      "tl": "tinh lo",
+      "xl": "xa lo",
+      "hl": "huong lo"
+    }
+  },
+  "legacy_district_prefixes": [
+    "quan",
+    "huyen",
+    "thi xa",
+    "q",
+    "h",
+    "tx"
+  ]
+}

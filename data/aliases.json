@@ -1,0 +1,149 @@
+{
+  "province": {
+    "Hồ Chí Minh": [
+      "hcm",
+      "tphcm",
+      "tp hcm",
+      "tp ho chi minh",
+      "thanh pho ho chi minh",
+      "sai gon",
+      "saigon",
+      "sg"
+    ],
+    "Hà Nội": [
+      "hn",
+      "tp hn",
+      "tp ha noi",
+      "thanh pho ha noi",
+      "thu do ha noi"
+    ],
+    "Hải Phòng": [
+      "hp",
+      "tp hp",
+      "tp hai phong",
+      "thanh pho hai phong"
+    ],
+    "Đà Nẵng": [
+      "dn",
+      "tp dn",
+      "tp da nang",
+      "thanh pho da nang"
+    ],
+    "Cần Thơ": [
+      "ct",
+      "tp ct",
+      "tp can tho",
+      "thanh pho can tho"
+    ],
+    "Huế": [
+      "tp hue",
+      "thanh pho hue"
+    ],
+    "Thừa Thiên Huế": [
+      "tt hue",
+      "tth"
+    ],
+    "Bà Rịa - Vũng Tàu": [
+      "brvt",
+      "ba ria vung tau",
+      "ba ria"
+    ]
+  },
+  "ward": {
+    "Văn Miếu - Quốc Tử Giám": [
+      "van mieu quoc tu giam"
+    ],
+    "Tăng Nhơn Phú A": [
+      "tnpa"
+    ],
+    "Tăng Nhơn Phú B": [
+      "tnpb"
+    ],
+    "Phường Đúc": [
+      "phuong phuong duc"
+    ]
+  },
+  "street": {
+    "Cách Mạng Tháng 8": [
+      "cmt8",
+      "cach mang thang tam"
+    ],
+    "3/2": [
+      "duong 3/2",
+      "3 thang 2",
+      "ba thang hai",
+      "duong 3 thang 2",
+      "duong ba thang hai"
+    ],
+    "2/9": [
+      "duong 2/9",
+      "2 thang 9",
+      "hai thang chin",
+      "duong 2 thang 9"
+    ],
+    "30/4": [
+      "duong 30/4",
+      "30 thang 4",
+      "ba muoi thang tu",
+      "duong 30 thang 4"
+    ],
+    "19/5": [
+      "duong 19/5",
+      "19 thang 5",
+      "muoi chin thang nam",
+      "duong 19 thang 5"
+    ],
+    "26/3": [
+      "duong 26/3",
+      "26 thang 3",
+      "hai sau thang ba"
+    ],
+    "Xô Viết Nghệ Tĩnh": [
+      "xvnt"
+    ],
+    "Xa lộ Hà Nội": [
+      "xlhn"
+    ],
+    "Nguyễn Thị Minh Khai": [
+      "ntmk"
+    ],
+    "Nam Kỳ Khởi Nghĩa": [
+      "nkkn"
+    ],
+    "Điện Biên Phủ": [
+      "dbp"
+    ],
+    "Lê Hồng Phong": [
+      "lhp"
+    ],
+    "Nguyễn Văn Linh": [
+      "nvl"
+    ],
+    "Hoàng Văn Thụ": [
+      "hvt"
+    ],
+    "Quốc lộ 1A": [
+      "ql1a",
+      "ql 1a"
+    ],
+    "Quốc lộ 13": [
+      "ql13",
+      "ql 13"
+    ],
+    "Quốc lộ 22": [
+      "ql22",
+      "ql 22"
+    ],
+    "Tỉnh lộ 10": [
+      "tl10",
+      "tl 10"
+    ],
+    "Hương lộ 2": [
+      "hl2",
+      "hl 2"
+    ],
+    "Láng": [
+      "duong lang"
+    ]
+  }
+}

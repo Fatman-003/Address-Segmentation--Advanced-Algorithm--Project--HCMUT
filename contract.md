@@ -1,6 +1,6 @@
 # Contract — Address Segmentation (v0.1 / DRAFT)
 
-> **All members must read this file before coding.** This repository is a skeleton: only `src/main.py` implements I/O and orchestration; the three teammate folders are deliberately empty. The local CLI/JSONL format below is **provisional**, not confirmed as the lecturer's judge protocol.
+> **All members must read this file before coding.** Segmentation is available. The database builder and searcher specified below are pending implementation. The local CLI/JSONL format remains **provisional** pending confirmation of the lecturer's judge protocol.
 
 ## 1. Requirements and constraints
 
@@ -31,7 +31,7 @@ STARTUP (once per process, if judge supports persistent process)
 
 EACH REQUEST
   UTF-8 text -> src/main.py reads raw address str
-  -> src.address_segmentation.segmenter.segment_address(raw_address)
+  -> src.address_segmentation.address_segmentation.segment_address(raw_address)
   -> src.searching.searcher.search_address(segmented, index)
   -> src/main.py validates + writes street/ward/province
 ```
@@ -58,7 +58,7 @@ def build_index(database_dir: Path) -> object:
 - If aliases collide, they may correspond to multiple canonical entries; do not silently discard conflicts.
 - No hard-coded sample outputs or reliance on the development database being identical to the judging database.
 
-### B. `src/address_segmentation/segmenter.py` (segmentation owner)
+### B. `src/address_segmentation/address_segmentation.py` (segmentation owner)
 
 ```python
 def segment_address(raw_address: str) -> dict:
@@ -80,6 +80,7 @@ Required dictionary schema:
 
 - `field` must be one of `street`, `ward`, `province`, `unknown`.
 - For uncertain segmentations, return **multiple candidate spans**, including overlaps if appropriate; or emit a span with `field="unknown"`. An empty `spans` list is valid; searching may use `raw_address` to recover.
+- **Known mismatch.** The current fallback assigns at most one candidate per field and does not emit alternatives or `unknown`. Searching can use the preserved `raw_address` to reconsider these boundaries.
 - Do not permanently remove house numbers (`3/2` can be a street), alter original input, or claim a guess is already a canonical value.
 - Rules for `P.`, `Ph.`, `TP.`, `D.`, `Đ.` and punctuation belong here, not in `main.py`.
 

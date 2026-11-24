@@ -49,18 +49,18 @@ def _load_teammate_functions():
     """Import at execution time, so --help and I/O tests work before implementation."""
     try:
         from src.database.builder import build_index
-        from src.address_segmentation.segmenter import segment_address
+        from src.address_segmentation.address_segmentation import segment_address
         from src.searching.searcher import search_address
     except ModuleNotFoundError as exc:
         expected = {
-            "src.database.builder", "src.address_segmentation.segmenter",
+            "src.database.builder",
+            "src.address_segmentation.address_segmentation",
             "src.searching.searcher",
         }
         if exc.name in expected:
             raise ModuleNotReadyError(
-                "Teammate modules are still empty. Implement the functions "
-                "specified in contract.md before running the full pipeline. "
-                f"Missing: {exc.name}"
+                f"Required pipeline module {exc.name} is missing. "
+                "See contract.md for its required entry point."
             ) from exc
         raise
     return build_index, segment_address, search_address
@@ -71,14 +71,20 @@ def run_pipeline(
 ) -> None:
     """Index once; then segment, search and write each request."""
     build_index, segment_address, search_address = _load_teammate_functions()
+    # STARTUP hook — the database module loads reference data and builds the shared index once.
+    # TODO: Verify this call with the database owner's builder when it is available.
     index = build_index(database_dir)
     for raw_address in addresses:
+        # SEGMENTATION hook — pass the original input and retain the proposed spans for search.
         segmented = segment_address(raw_address)
         if not isinstance(segmented, dict):
             raise TypeError("segment_address must return a dict (see contract.md)")
         if segmented.get("raw_address") != raw_address:
             raise ValueError("segment_address must preserve raw_address")
+        # SEARCHING hook — resolve the proposed spans against the shared index.
+        # TODO: Verify the searcher's canonical output with the database owner's index.
         result = search_address(segmented, index)
+        # OUTPUT hook — validate and write one JSON object for this request.
         write_result(output_stream, result)
 
 

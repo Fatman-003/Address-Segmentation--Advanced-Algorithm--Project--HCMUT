@@ -1,16 +1,20 @@
 import json
-from pathlib import Path
-from address_segmentation import segment_address
 import sys
+from pathlib import Path
 
 sys.stdout.reconfigure(encoding="utf-8")
 
-def run_tests():
-    # Lấy đường dẫn tuyệt đối tới file test_data.json nằm cùng thư mục
-    current_dir = Path(__file__).parent
-    data_file = current_dir / "test_data.json"
+ROOT_DIR = Path(__file__).resolve().parents[1]
+if str(ROOT_DIR) not in sys.path:
+    sys.path.insert(0, str(ROOT_DIR))
 
-    with open(data_file, "r", encoding="utf-8") as f:
+from src.address_segmentation import segment_address
+
+DATA_FILE = ROOT_DIR / "src" / "address_segmentation" / "test_data.json"
+
+
+def run_tests():
+    with open(DATA_FILE, "r", encoding="utf-8") as f:
         test_cases = json.load(f)
 
     passed = 0
@@ -29,14 +33,12 @@ def run_tests():
         if actual == expected:
             passed += 1
             print(f"[PASS] Case {idx}: {name}")
-            print(f"  Input   : {raw_input!r}")
-            print(f"  Expected: {expected}")
-            print(f"  Actual  : {actual}")
         else:
             print(f"[FAIL] Case {idx}: {name}")
-            print(f"  Input   : {raw_input!r}")
-            print(f"  Expected: {expected}")
-            print(f"  Actual  : {actual}")
+
+        print(f"  Input   : {raw_input!r}")
+        print(f"  Expected: {expected}")
+        print(f"  Actual  : {actual}")
         print("-" * 50)
 
     print(f"\nResult: {passed}/{total} PASSED.")

@@ -1,7 +1,7 @@
 import re
 
 #==== chuyen sang khong dau === 
-_ACCENT_GROUPS = {
+"""_ACCENT_GROUPS = {
     "a": "áàảãạăắằẳẵặâấầẩẫậ",
     "e": "éèẻẽẹêếềểễệ",
     "i": "íìỉĩị",
@@ -29,6 +29,7 @@ def remove_accents(text: str) -> str:
     if not text:
         return ""
     return text.translate(_ACCENT_TRANS_TABLE)
+"""
 # ==============================================================================
 # 1. BỘ REGEX TỐI ƯU HÓA HIỆU NĂNG (PRE-COMPILED REGEX)
 # ==============================================================================
@@ -43,17 +44,27 @@ DOT_SPLITTER_RE = re.compile(r"([a-z]+)\.(?=[a-z0-9])", re.IGNORECASE)
 PREFIX_NUMBER_SPLITTER_RE = re.compile(r"\b(p|q|f|h|tx|d)(\d+)\b", re.IGNORECASE)
 SLASH_WORD_SPLITTER_RE = re.compile(r"(\d+/\d+)([a-z]+)", re.IGNORECASE)
 
+_BOUNDARY = r"(?![a-zà-ỹ0-9_])"
+
 PROVINCE_ANCHORS = re.compile(
-    r"\b(thanh\s+pho|tp\.?|tinh|t\.)\b|\b(hcm|hn|dn|hai\s+phong|can\s+tho)\b",
-    re.IGNORECASE
+    rf"(?:thành\s+phố|tp\.?|tỉnh|t\.|hồ\s+chí\s+minh|hcm|hà\s+nội|hn|đà\s+nẵng|đn|hải\s+phòng|cần\s+thơ){_BOUNDARY}",
+    re.IGNORECASE,
 )
+
 WARD_ANCHORS = re.compile(
-    r"\b(phuong|p\.?|xa|x\.?|thi\s+tran|tt\.?|f\.?)\b",
-    re.IGNORECASE
+    rf"(?:phường|p\.?|xã|x\.?|thị\s+trấn|tt\.?|f\.?){_BOUNDARY}",
+    re.IGNORECASE,
 )
+
 STREET_ANCHORS = re.compile(
-    r"\b(duong|d\.?|pho|dai\s+lo|dl|ngo|ngach|hem|kiet)\b",
-    re.IGNORECASE
+    rf"(?:đường|đ\.?|phố|đại\s+lộ|đl|ngõ|ngách|hẻm|kiệt){_BOUNDARY}",
+    re.IGNORECASE,
+)
+
+STREET_PREFIX_RE = re.compile(
+    rf"^(?:ngách|ngõ|hẻm|đường|phố|đại\s+lộ|lộ|kiệt|số){_BOUNDARY}"
+    r"(?:\s+\d+(?:/\d+)*[a-zà-ỹ]*)?\s*",
+    re.IGNORECASE,
 )
 
 # ==============================================================================
@@ -97,9 +108,30 @@ def handle_address_direction(text: str) -> str:
 # 3. THUẬT TOÁN PHÂN TÁCH LÕI (CORE SEGMENTATION ENGINE)
 # ==============================================================================
 
+def extract_after_street_prefix(street: str | None) -> str | None:
+    """
+    Nếu street bắt đầu bằng tiền tố trong danh sách (ngách, ngõ, hẻm, đường, phố, đại lộ, lộ, kiệt, số),
+    tìm từ khóa đường/phố phía sau và trả về phần nằm sau từ khóa đó.
+    """
+    if not street:
+        return street
+
+    s = street.strip()
+    prefix_match = STREET_PREFIX_RE.match(s)
+    if not prefix_match:
+        return s
+
+    # Tìm từ khóa đường/phố bắt đầu từ sau cụm tiền tố đầu chuỗi
+    search_start = prefix_match.end()
+    anchor_match = STREET_ANCHORS.search(s, pos=search_start)
+    if not anchor_match:
+        return s
+
+    cleaned = s[anchor_match.end():].strip(" ,.-")
+    return cleaned or s
+
 def _split_by_comma(text: str) -> tuple[str | None, str | None, str | None]:
     parts = [p.strip() for p in text.split(",") if p.strip()]
-    
     street = None
     ward = None
     province = None
@@ -151,6 +183,14 @@ def _split_freeform(text: str) -> tuple[str | None, str | None, str | None]:
         
     return street, ward, province
 
+
+def strip_street_prefix(street: str | None) -> str | None:
+    """Loại bỏ tiền tố loại đường/ngõ/hẻm và số đứng đầu để giữ tên đường."""
+    if not street:
+        return street
+    cleaned = STREET_PREFIX_RE.sub("", street.strip()).strip()
+    return cleaned or street.strip()
+
 # ==============================================================================
 # 4. CHỮ KÝ API BẮT BUỘC THEO HỢP ĐỒNG (CONTRACT API)
 # ==============================================================================
@@ -167,10 +207,10 @@ def segment_address(raw_address: str) -> dict:
         return {"raw_address": raw_address, "spans": []}
     
     # Bước 1: Chuẩn hóa sang không dấu
-    no_accent = remove_accents(raw_address)
+   # no_accent = remove_accents(raw_address)
     
     # Bước 2: Dọn dẹp OCR (truyền no_accent thay vì raw_address)
-    cleaned = clean_ocr_text(no_accent)
+    cleaned = clean_ocr_text(raw_address)
     
     # Bước 3: Nhận diện hướng viết ngược và đưa về dạng xuôi chuẩn
     normalized_direction = handle_address_direction(cleaned)
@@ -183,8 +223,9 @@ def segment_address(raw_address: str) -> dict:
     
     # Bước 4: Đóng gói dữ liệu ra đúng cấu trúc Spans của Contract JSON
     spans = []
+    street_final = extract_after_street_prefix(street_cand)
     if street_cand:
-        spans.append({"field": "street", "text": street_cand})
+        spans.append({"field": "street", "text": street_final})
     if ward_cand:
         spans.append({"field": "ward", "text": ward_cand})
     if province_cand:

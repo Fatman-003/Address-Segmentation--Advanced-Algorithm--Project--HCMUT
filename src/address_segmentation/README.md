@@ -6,35 +6,34 @@ Module được viết hoàn toàn bằng Python thuần (chỉ sử dụng thư
 
 Flow chart 
 ```mermaid
----
-config:
-  layout: gipsec
----
 flowchart TD
-    P(["Start"]) --> A
-    A["Input: raw_address (str)"] --> B{"Rỗng hoặc chỉ có khoảng trắng?"}
-    B -- "True" --> C["Trả về {'raw_address': raw_address, 'spans': []}"]
-    B -- "False" --> D["clean_ocr_text()<br/>Xóa ký tự rác, tách dấu chấm/số/gạch chéo, chuẩn hóa khoảng trắng"]
+    classDef io fill:#e0f2fe,stroke:#0284c7,stroke-width:1.5px,color:#0f172a
+    classDef diamond fill:#fef9c3,stroke:#ca8a04,stroke-width:1.5px,color:#0f172a
+    classDef proc fill:#f1f5f9,stroke:#475569,stroke-width:1.5px,color:#0f172a
+    classDef fallback fill:#ffe4e6,stroke:#e11d48,stroke-width:1.5px,color:#0f172a
 
-    D --> E["handle_address_direction()<br/>Bắt đầu bằng Tỉnh/TP và có dấu phẩy thì đảo ngược thứ tự"]
+    P(["Start"]):::io --> A["Input: raw_address (str)"]:::io
+    A --> B{"Rỗng hoặc<br/>chỉ có khoảng trắng?"}:::diamond
+    B -- "True" --> C["Trả về spans: []"]:::io
+    B -- "False" --> D["clean_ocr_text()<br/>Xóa ký tự rác, tách dấu chấm/số/gạch chéo,<br/>chuẩn hóa khoảng trắng"]:::proc
 
-    E --> F{"bypass_comma()<br/>Bắt đầu bằng ngõ/ngách/hẻm?"}
-    F -- "True" --> G{"_split_freeform()<br/>Cắt theo WARD_ANCHORS & PROVINCE_ANCHORS<br/"}
-    F -- "False" --> H{"Có dấu phẩy ','?"}
+    D --> E["handle_address_direction()<br/>Bắt đầu bằng Tỉnh/TP và có dấu phẩy<br/>thì đảo ngược thứ tự"]:::proc
 
-    H -- "True" --> I["_split_by_comma()<br/>Ánh xạ theo vị trí: street, ward, province"]
+    E --> F{"bypass_comma()<br/>Bắt đầu bằng<br/>ngõ/ngách/hẻm?"}:::diamond
+    F -- "True" --> G{"_split_freeform()<br/>Cắt theo WARD &<br/>PROVINCE ANCHORS?"}:::diamond
+    F -- "False" --> H{"Có dấu phẩy ','?"}:::diamond
+
+    H -- "True" --> I["_split_by_comma()<br/>Ánh xạ theo vị trí: street, ward, province"]:::proc
     H -- "False" --> G
 
-    I --> J["extract_after_street_prefix()<br/>Nếu bắt đầu bằng tiền tố đường/ngõ/hẻm/số<br/>và có anchor đường/phố sau thì lấy phần sau anchor"]
-    G --"True"--> J
-    G --"False"-->M[">fallback n-gram từ cuối"]
+    I --> J["extract_after_street_prefix()<br/>Nếu bắt đầu bằng tiền tố đường/ngõ/hẻm/số<br/>và có anchor đường/phố sau thì lấy phần sau"]:::proc
+    G -- "True" --> J
+    G -- "False" --> M["Fallback n-gram từ cuối"]:::fallback
+    M --> J
 
-    M-->J
-
-    J --> K["Đóng gói spans [{'field': ..., 'text': ...}]"]
-    K --> L["Output: {'raw_address': raw_address, 'spans': spans}"]
-    L --> O(["End"])
-
+    J --> K["Đóng gói spans [{'field': ..., 'text': ...}]"]:::proc
+    K --> L["Output: {'raw_address': raw_address, 'spans': spans}"]:::io
+    L --> O(["End"]):::io
    ```
 
     hàm cần call back: 
